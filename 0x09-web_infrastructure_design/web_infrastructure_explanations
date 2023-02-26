@@ -1,0 +1,69 @@
+Simple web Infrastructure,
+
+Suppose a user wants to access www.foobar.com, they will enter the domain name into their web browser. The browser will first perform a DNS (Domain Name System) lookup to resolve the IP address of the web server where the website is hosted. This is done by querying the DNS servers responsible for the foobar.com domain.
+
+Server:
+A server is a computer system that provides services to other computers or devices on a network. In this case, the server will host the website files, application server, and database.
+
+Domain name:
+A domain name is a human-readable address used to identify a website on the internet. It is easier to remember and use than an IP address. The role of the domain name is to provide a memorable and unique name for the website, which can be used instead of the server's IP address.
+
+DNS record:
+The DNS record type for the www subdomain is an A record. This record associates the www subdomain with the server's IP address.
+
+Web server (Nginx):
+The web server's role is to receive incoming HTTP requests from the user's browser and respond with the appropriate web pages. In this infrastructure, Nginx will be used as the web server to handle incoming requests.
+
+Application server:
+The application server's role is to process business logic and serve dynamic content to the web server. In this infrastructure, we will use a Python application server such as Gunicorn.
+
+Application files:
+The application files are the code base for the website. They contain the web application logic, templates, and static files such as CSS, JavaScript, and images.
+
+Database (MySQL):
+The database's role is to store and manage the website's data, such as user accounts, product information, and so on. In this infrastructure, we will use MySQL as the database management system.
+
+Communication with the user's computer:
+The server will use the HTTP protocol to communicate with the user's computer. When a user requests a web page, their browser sends an HTTP request to the server. The server responds with an HTTP response containing the web page's HTML, CSS, JavaScript, and any other necessary files.
+
+Issues with this infrastructure
+
+Single point of failure (SPOF)
+Since we are using a single server, it is a single point of failure. If the server goes down, the website will become unavailable, resulting in lost revenue and reputation.
+
+Downtime during maintenance:
+When deploying new code, the web server needs to be restarted, causing website downtime. This can result in lost revenue and customer dissatisfaction
+
+Cannot scale if too much incoming traffic:
+If the website experiences a surge in traffic, the server may become overloaded and unable to handle the increased load. This can result in slow response times or website downtime.
+
+Distributed web infrastructure Explanation
+
+The proposed infrastructure consists of three servers. The first two servers are web/application servers, the third server is a database server, and there is also a load balancer to distribute traffic between the two web servers.
+
+We are using HAproxy as our load balancer because it is a reliable, open-source solution that supports a variety of distribution algorithms. The distribution algorithm we have configured it with is round-robin, which simply distributes traffic evenly across all available servers.
+
+The load-balancer is enabling an Active-Active setup, which means that both web servers are actively receiving traffic at all times. This is different from an Active-Passive setup, in which one server is active and the other is inactive (or "standby") until the active server fails.
+
+The database is set up as a Primary-Replica (Master-Slave) cluster, which means that there is one primary node (the "master") that accepts writes and multiple replica nodes (the "slaves") that replicate the data from the primary node. This provides redundancy and allows for failover in case the primary node goes down.
+
+The primary node is responsible for handling writes and updates to the database, while the replica nodes are responsible for reading data from the database. In regard to the application, the primary node is the "source of truth" for the most up-to-date data, while the replica nodes may have slightly older data due to replication lag.
+
+The SPOFs in this infrastructure include the load balancer and the database primary node. If either of these components fails, the entire site could be affected. Additionally, there are security issues with no firewall and no HTTPS, which could leave the site vulnerable to attacks. Finally, there is no monitoring in place, which means that issues may not be detected or addressed until they become serious problems.
+
+Secured web Infrastructure Explanation;
+
+The proposed infrastructure consists of three servers. The first server is a web/application server, the second server is a database server, and the third server is a web/application/monitoring server. There are also three firewalls to protect the servers.
+
+The website www.foobar.com will be served over HTTPS, using an SSL certificate to encrypt traffic. This is important for security purposes, as it helps protect sensitive information from being intercepted by third parties.
+
+Monitoring is used to keep track of the health and performance of the servers and the website. In this case, we are using monitoring clients to collect data from the servers and send it to a monitoring tool, such as SumoLogic. This allows us to identify and troubleshoot issues quickly, before they become serious problems.
+
+If we want to monitor the web server QPS (Queries Per Second), we can set up a monitoring tool to collect data on the number of requests received by the web server over a given period of time. This will give us an idea of the server's capacity and help us identify potential performance bottlenecks
+
+One issue with terminating SSL at the load balancer level is that it can introduce a potential point of failure, as all the SSL processing is done at one location. If the load balancer goes down, the entire site will be inaccessible. It's better to terminate SSL at the server level, which allows for better control over security and scalability.
+
+Having only one MySQL server capable of accepting writes is a single point of failure. If that server goes down, the entire site will be affected. To avoid this, we could set up a MySQL cluster with multiple servers that can accept writes.
+
+Having servers with all the same components (database, web server, and application server) can be a problem because it doesn't allow for much flexibility in terms of scaling and redundancy. It's better to have specialized servers for each component, so that each one can be scaled and managed independently.
+

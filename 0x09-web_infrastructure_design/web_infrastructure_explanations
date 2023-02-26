@@ -37,6 +37,7 @@ When deploying new code, the web server needs to be restarted, causing website d
 Cannot scale if too much incoming traffic:
 If the website experiences a surge in traffic, the server may become overloaded and unable to handle the increased load. This can result in slow response times or website downtime.
 
+
 Distributed web infrastructure Explanation
 
 The proposed infrastructure consists of three servers. The first two servers are web/application servers, the third server is a database server, and there is also a load balancer to distribute traffic between the two web servers.
@@ -50,6 +51,7 @@ The database is set up as a Primary-Replica (Master-Slave) cluster, which means 
 The primary node is responsible for handling writes and updates to the database, while the replica nodes are responsible for reading data from the database. In regard to the application, the primary node is the "source of truth" for the most up-to-date data, while the replica nodes may have slightly older data due to replication lag.
 
 The SPOFs in this infrastructure include the load balancer and the database primary node. If either of these components fails, the entire site could be affected. Additionally, there are security issues with no firewall and no HTTPS, which could leave the site vulnerable to attacks. Finally, there is no monitoring in place, which means that issues may not be detected or addressed until they become serious problems.
+
 
 Secured web Infrastructure Explanation;
 

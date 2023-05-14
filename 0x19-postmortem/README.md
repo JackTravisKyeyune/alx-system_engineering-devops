@@ -1,9 +1,10 @@
 0x19 Postmortem
 
 Issue Summary:
-On May 10, 2023, from 4:00 PM to 6:30 PM (EST), the web server of our e-commerce website experienced an outage, resulting in slow response times and error messages for some users. Approximately 30% of our customers were affected by this outage.
+On May 10, 2023, from 4:00 PM to 6:30 PM (EST), the web server of our E-commerce platform website experienced an outage, resulting in slow response times and error messages for some users. Approximately 40% of our customers were affected by this outage.
 
 Root Cause:
+
 The root cause of the outage was identified as a sudden surge in traffic caused by a marketing campaign that was launched without proper load testing. As a result, the web server was overwhelmed and could not handle the incoming requests, causing it to slow down and eventually crash.
 
 Timeline:
@@ -24,9 +25,11 @@ Timeline:
 6:30 PM - The web server infrastructure was fully operational, and the issue was resolved.
 
 Root Cause and Resolution:
+
 The root cause of the issue was a sudden surge in traffic caused by a marketing campaign that was launched without proper load testing. To resolve the issue, the team scaled up the web server infrastructure by adding additional servers to handle the traffic.
 
 Corrective and Preventative Measures:
+
 To prevent a similar outage from happening in the future, the following measures will be implemented:
 
 - Load testing will be performed before any new marketing campaigns or promotions are launched.
@@ -41,4 +44,5 @@ Tasks to address the issue:
 - Establish a standard incident response plan to address similar issues quickly and effectively.
 - Train the team on incident response and load testing best practices.
 
-In conclusion, the outage that occurred on our e-commerce website was caused by a sudden surge in traffic due to a marketing campaign that was launched without proper load testing. The issue was resolved by scaling up the web server infrastructure. To prevent similar outages in the future, we will implement measures such as load testing, optimizing the infrastructure, and enhancing the monitoring system.
+In conclusion, 
+The outage that occurred on our e-commerce website was caused by a sudden surge in traffic due to a marketing campaign that was launched without proper load testing. The issue was resolved by scaling up the web server infrastructure. To prevent similar outages in the future, we will implement measures such as load testing, optimizing the infrastructure, and enhancing the monitoring system.

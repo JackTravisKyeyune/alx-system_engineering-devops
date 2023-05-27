@@ -40,9 +40,8 @@ frontend  jacktravis-frontend-http
         default_backend jacktravis-backend
 
 frontend jacktravis-frontend-https
-	bind *:443 ssl crt /etc/haproxy/certs/www.jacktravis.tech.pem
-	http-request set-header X-Forwarded-Proto https
-	http-request redirect scheme https code 301 unless { ssl_fc }
+	bind *:443 ssl crt /etc/ssl/www.app-space.tech/cert.pem
+        http-request redirect scheme https unless { ssl_fc }
 	default_backend jacktravis-backend
 
 backend jacktravis-backend
